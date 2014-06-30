@@ -35,7 +35,7 @@
 #endif
 
 #ifndef WY_POPOVER_MIN_SIZE
-    #define WY_POPOVER_MIN_SIZE                      CGSizeMake(240, 160)
+    #define WY_POPOVER_MIN_SIZE                      CGSizeMake(200, 160)
 #endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
@@ -64,24 +64,24 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 @property (nonatomic, strong) UIColor *glossShadowColor         UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   glossShadowOffset        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  glossShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  glossShadowBlurRadius    UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, assign) NSUInteger  borderWidth              UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  arrowBase                UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  arrowHeight              UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  borderWidth              UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  arrowBase                UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  arrowHeight              UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, strong) UIColor *outerShadowColor         UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *outerStrokeColor         UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  outerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  outerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   outerShadowOffset        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  outerCornerRadius        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  minOuterCornerRadius     UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  outerCornerRadius        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  minOuterCornerRadius     UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, strong) UIColor *innerShadowColor         UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *innerStrokeColor         UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  innerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  innerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   innerShadowOffset        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) NSUInteger  innerCornerRadius        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  innerCornerRadius        UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, assign) UIEdgeInsets viewContentInsets    UI_APPEARANCE_SELECTOR;
 
@@ -101,7 +101,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 @property (nonatomic, readonly, getter=isPopoverVisible) BOOL   popoverVisible;
 @property (nonatomic, strong, readonly) UIViewController       *contentViewController;
 @property (nonatomic, assign) CGSize                            popoverContentSize;
-@property (nonatomic, assign) float                             animationDuration;
+@property (nonatomic, assign) CGFloat                           animationDuration;
 
 @property (nonatomic, strong) WYPopoverTheme                   *theme;
 
@@ -210,7 +210,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 - (BOOL)popoverControllerShouldIgnoreKeyboardBounds:(WYPopoverController *)popoverController;
 
-- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(float *)value;
+- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(CGFloat *)value;
 
 @end
 
@@ -224,24 +224,24 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 @property (nonatomic, strong) UIColor *glossShadowColor;
 @property (nonatomic, assign) CGSize   glossShadowOffset;
-@property (nonatomic, assign) NSUInteger  glossShadowBlurRadius;
+@property (nonatomic, assign) CGFloat  glossShadowBlurRadius;
 
-@property (nonatomic, assign) NSUInteger  borderWidth;
-@property (nonatomic, assign) NSUInteger  arrowBase;
-@property (nonatomic, assign) NSUInteger  arrowHeight;
+@property (nonatomic, assign) CGFloat  borderWidth;
+@property (nonatomic, assign) CGFloat  arrowBase;
+@property (nonatomic, assign) CGFloat  arrowHeight;
 
 @property (nonatomic, strong) UIColor *outerShadowColor;
 @property (nonatomic, strong) UIColor *outerStrokeColor;
-@property (nonatomic, assign) NSUInteger  outerShadowBlurRadius;
+@property (nonatomic, assign) CGFloat  outerShadowBlurRadius;
 @property (nonatomic, assign) CGSize   outerShadowOffset;
-@property (nonatomic, assign) NSUInteger  outerCornerRadius;
-@property (nonatomic, assign) NSUInteger  minOuterCornerRadius;
+@property (nonatomic, assign) CGFloat  outerCornerRadius;
+@property (nonatomic, assign) CGFloat  minOuterCornerRadius;
 
 @property (nonatomic, strong) UIColor *innerShadowColor;
 @property (nonatomic, strong) UIColor *innerStrokeColor;
-@property (nonatomic, assign) NSUInteger  innerShadowBlurRadius;
+@property (nonatomic, assign) CGFloat  innerShadowBlurRadius;
 @property (nonatomic, assign) CGSize   innerShadowOffset;
-@property (nonatomic, assign) NSUInteger  innerCornerRadius;
+@property (nonatomic, assign) CGFloat  innerCornerRadius;
 
 @property (nonatomic, assign) UIEdgeInsets viewContentInsets;
 
