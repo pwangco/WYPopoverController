@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'WYPopoverController'
-  s.version      = '0.2.2'
+  s.version      = ‘0.2.3
   s.summary      = 'An iOS Popover for iPhone and iPad. Very customizable.'
   s.description  = <<-DESC
                     WYPopoverController is for the presentation of content in popover on iPhone / iPad devices. Very customizable.
