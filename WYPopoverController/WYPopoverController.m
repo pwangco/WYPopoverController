@@ -1541,6 +1541,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     WYPopoverArrowDirection  permittedArrowDirections;
     BOOL                     animated;
     BOOL                     isListeningNotifications;
+    BOOL                     isObserverAdded;
     BOOL                     isInterfaceOrientationChanging;
     __weak UIBarButtonItem  *barButtonItem;
     CGRect                   keyboardRect;
@@ -1936,14 +1937,21 @@ static WYPopoverTheme *defaultTheme_ = nil;
             
             strongSelf->backgroundView.accessibilityViewIsModal = NO;
             
-            if ([strongSelf->viewController respondsToSelector:@selector(preferredContentSize)])
+            if (isObserverAdded == NO)
             {
-                [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize)) options:0 context:nil];
+                isObserverAdded = YES;
+                if ([strongSelf->viewController respondsToSelector:@selector(preferredContentSize)])
+                {
+                    [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize)) options:0 context:nil];
+                }
+                else
+                {
+                    [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover)) options:0 context:nil];
+                }
+            
             }
-            else
-            {
-                [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover)) options:0 context:nil];
-            }
+            
+            
         }
         
         if (completion)
@@ -2687,11 +2695,16 @@ CGRect CGRectIntegralScaledEx(CGRect rect, CGFloat scale)
     }
     
     @try {
-        if ([viewController respondsToSelector:@selector(preferredContentSize)]) {
-            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize))];
-        } else {
-            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover))];
+        if (isObserverAdded == YES)
+        {
+            isObserverAdded = NO;
+            if ([viewController respondsToSelector:@selector(preferredContentSize)]) {
+                [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize))];
+            } else {
+                [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover))];
+            }
         }
+        
     }
     @catch (NSException * __unused exception) {}
     
@@ -3189,6 +3202,23 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
     
     [overlayView removeFromSuperview];
     [overlayView setDelegate:nil];
+    
+    @try {
+        if (isObserverAdded == YES) {
+            isObserverAdded = NO;
+            
+            if ([viewController respondsToSelector:@selector(preferredContentSize)]) {
+                [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize))];
+            } else {
+                [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover))];
+            }
+        }
+    }
+    @catch (NSException *exception) {
+    }
+    @finally {
+        viewController = nil;
+    }
     
     barButtonItem = nil;
     passthroughViews = nil;
