@@ -1822,8 +1822,9 @@ static WYPopoverTheme *defaultTheme_ = nil;
         CGSize windowSize = [[UIApplication sharedApplication] keyWindow].bounds.size;
         
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+       // UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
         
-        result = CGSizeMake(320, UIDeviceOrientationIsLandscape(orientation) ? windowSize.width : windowSize.height);
+        result = CGSizeMake(320, UIInterfaceOrientationIsLandscape(orientation) ? windowSize.width : windowSize.height);
     }
     
     return result;
@@ -2133,12 +2134,13 @@ static WYPopoverTheme *defaultTheme_ = nil;
     CGAffineTransform transform = backgroundView.transform;
     
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    //UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
 
     CGSize containerViewSize = backgroundView.frame.size;
     
     if (backgroundView.arrowHeight > 0)
     {
-        if (UIDeviceOrientationIsLandscape(orientation)) {
+        if (UIInterfaceOrientationIsLandscape(orientation)) {
             containerViewSize.width = backgroundView.frame.size.height;
             containerViewSize.height = backgroundView.frame.size.width;
         }
@@ -2982,6 +2984,8 @@ CGRect CGRectIntegralScaledEx(CGRect rect, CGFloat scale)
 
 #pragma mark Inline functions
 
+/*
+
 static NSString* WYStringFromOrientation(NSInteger orientation) {
     NSString *result = @"Unknown";
     
@@ -3004,16 +3008,18 @@ static NSString* WYStringFromOrientation(NSInteger orientation) {
     
     return result;
 }
+*/
 
 static CGFloat WYStatusBarHeight() {
     UIInterfaceOrientation orienation = [[UIApplication sharedApplication] statusBarOrientation];
+    //UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     
     CGFloat statusBarHeight = 0;
     {
         CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
         statusBarHeight = statusBarFrame.size.height;
         
-        if (UIDeviceOrientationIsLandscape(orienation))
+        if (UIInterfaceOrientationIsLandscape(orienation))
         {
             statusBarHeight = statusBarFrame.size.width;
         }
@@ -3142,6 +3148,9 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
         
         [delegate popoverController:self willRepositionPopoverToRect:&anotherRect inView:&anotherInView];
         
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+        
         if (&anotherRect != NULL)
         {
             rect = anotherRect;
@@ -3151,7 +3160,10 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
         {
             inView = anotherInView;
         }
+
     }
+    
+#pragma clang diagnostic pop
     
     [self positionPopover:NO];
 }
